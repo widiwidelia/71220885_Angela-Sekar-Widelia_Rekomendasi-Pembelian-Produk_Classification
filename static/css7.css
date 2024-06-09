@@ -25,11 +25,10 @@ input[type="text"] {
 
 button {
     padding: 5px 10px;
-    background-color: blue;
+    background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 
 button:hover {

@@ -4,28 +4,35 @@ from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 import json
 
+# Membaca file CSV
 filename = 'dataset.csv'
 column_names = ['userID', 'productID', 'rating', 'timestamp']
 df = pd.read_csv(filename, names=column_names, header=None)
 
+# Memeriksa kebersihan data dan memproses data
 df = df.dropna()
 df['date'] = pd.to_datetime(df['timestamp'], unit='s')
 
+# Membuat user dan produk mapping
 user_mapper = {user: idx for idx, user in enumerate(df['userID'].unique())}
 product_mapper = {product: idx for idx, product in enumerate(df['productID'].unique())}
 user_inverse_mapper = {idx: user for user, idx in user_mapper.items()}
 product_inverse_mapper = {idx: product for product, idx in product_mapper.items()}
 
+# Mapping IDs ke index
 user_index = df['userID'].map(user_mapper)
 product_index = df['productID'].map(product_mapper)
 
+# Membuat matriks sparse
 sparse_matrix = csr_matrix((df['rating'], (user_index, product_index)), shape=(len(user_mapper), len(product_mapper)))
 
+# Membuat matriks sparse untuk data pelatihan
 train_data = df
 train_user_index = train_data['userID'].map(user_mapper)
 train_product_index = train_data['productID'].map(product_mapper)
 train_sparse_matrix = csr_matrix((train_data['rating'], (train_user_index, train_product_index)), shape=(len(user_mapper), len(product_mapper)))
 
+# Menggunakan Nearest Neighbors untuk mencari tetangga terdekat
 knn = NearestNeighbors(metric='cosine', algorithm='brute')
 knn.fit(train_sparse_matrix.T)
 
