@@ -2,18 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rekomendasi Produk</title>
+    <title>Product Recommendations</title>
 </head>
 <body>
-    <h1>Rekomendasi Produk</h1>
+    <h1>Product Recommendations</h1>
+    <form method="POST">
+        <label for="userID">Enter User ID:</label>
+        <input type="text" id="userID" name="userID" required>
+        <button type="submit">Get Recommendations</button>
+    </form>
+    <h2>Recommendations:</h2>
     {% if recommendations %}
         <ul>
         {% for item in recommendations %}
-            <li>{{ item }}</li>
+            <li>Product ID: {{ item[0] }}, Average Rating: {{ item[1] }}</li>
         {% endfor %}
         </ul>
+    {% elif error %}
+        <p>{{ error }}</p>
     {% else %}
-        <p>Tidak ada rekomendasi untuk ditampilkan.</p>
+        <p>No recommendations available.</p>
     {% endif %}
 </body>
 </html>
