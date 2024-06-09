@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekomendasi Pembelian Produk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css7.css') }}">
+</head>
+<body>
+    <center>
+        <h2>Enter your ID</h2>
+        <form method="post" action="/">
+            <label for="userID">User ID:</label>
+            <input type="text" id="userID" name="userID">
+            <button type="submit">Enter</button>
+        </form>
+        {% if recommendations %}
+            <h3>Recommendations:</h3>
+            <table>
+                <tr><th>Product ID</th><th>Rating (Average)</th></tr>
+                {% for rec in recommendations %}
+                    <tr><td>{{ rec[0] }}</td><td>{{ rec[1] }}</td></tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </center>
+</body>
+</html>
