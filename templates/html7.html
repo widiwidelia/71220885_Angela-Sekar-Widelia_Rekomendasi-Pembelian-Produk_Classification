@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Recommendations</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h1>Product Recommendations</h1>
@@ -13,13 +29,18 @@
     </form>
     <h2>Recommendations:</h2>
     {% if recommendations %}
-        <ul>
-        {% for item in recommendations %}
-            <li>Product ID: {{ item[0] }}, Average Rating: {{ item[1] }}</li>
-        {% endfor %}
-        </ul>
-    {% elif error %}
-        <p>{{ error }}</p>
+        <table>
+            <tr>
+                <th>Product ID</th>
+                <th>Average Rating</th>
+            </tr>
+            {% for item in recommendations %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
         <p>No recommendations available.</p>
     {% endif %}

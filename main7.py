@@ -11,9 +11,11 @@ logging.basicConfig(level=logging.DEBUG)
 def index():
     if request.method == 'POST':
         user_id = request.form['userID']
-        result = subprocess.run(['python', 'coba7.py', user_id], stdout=subprocess.PIPE)
+        result = subprocess.run(['python', 'coba7.py', user_id], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output = result.stdout.decode('utf-8')
+        error_output = result.stderr.decode('utf-8')
         logging.debug(f'Output from coba7.py: {output}')
+        logging.debug(f'Stderr from coba7.py: {error_output}')
         try:
             recommendations = json.loads(output)
             return render_template('html7.html', recommendations=recommendations)
